@@ -10,7 +10,7 @@ class ReviewsController < ApplicationController
   def new
     @review = Review.new
     @teamMembers = TeamMember.all.map { |teamMember| [teamMember.name, teamMember.id] }
-    
+
     respond_to do |format|
       format.html # new.html.erb
     end
@@ -21,8 +21,9 @@ class ReviewsController < ApplicationController
 
     respond_to do |format|
       if @review.save
-        format.html { redirect_to(@review, :notice => 'Review was successfully created.') }
+        format.html { redirect_to reviews_path }
       else
+        @teamMembers = TeamMember.all.map { |teamMember| [teamMember.name, teamMember.id] }
         format.html { render :action => "new" }
       end
     end

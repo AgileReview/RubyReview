@@ -1,4 +1,6 @@
 RubyReview::Application.routes.draw do
+  resources :evaluations
+
   resources :roles
 
   resources :roles

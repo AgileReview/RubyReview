@@ -1,0 +1,25 @@
+<%= form_for(@team_member) do |f| %>
+  <% if @team_member.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@team_member.errors.count, "error") %> prohibited this team_member from being saved:</h2>
+
+      <ul>
+      <% @team_member.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    Name:<br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    Role:<br/>
+    <%= f.select :Role_id, options_for_select(@roles)%>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

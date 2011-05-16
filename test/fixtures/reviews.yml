@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  dueDate: 2011-05-13 12:19:25
+  TeamMember: 
+
+two:
+  dueDate: 2011-05-13 12:19:25
+  TeamMember: 

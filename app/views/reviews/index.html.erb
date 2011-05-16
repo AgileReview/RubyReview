@@ -1,0 +1,17 @@
+<h1>Listing reviews</h1>
+
+<table>
+  <tr>
+    <th>Review Of</th>
+    <th>Due By</th>
+    <th></th>
+  </tr>
+
+<% @reviews.each do |review| %>
+  <tr>
+    <td><%= review.TeamMember.name %></td>
+    <td><%= review.dueDate %></td>
+    <td><%= link_to 'Respond', create_evaluation_path(review) %></td>
+  </tr>
+<% end %>
+</table>

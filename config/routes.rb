@@ -1,6 +1,8 @@
 RubyReview::Application.routes.draw do
   resources :roles
 
+  resources :roles
+
   resources :team_members
 
   resources :questions

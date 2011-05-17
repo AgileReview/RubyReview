@@ -1,4 +1,15 @@
 class EvaluationsController < ApplicationController
+  
+  class ResponseViewModel
+    @questionAnswers
+    @errors
+  end
+  
+  class QAViewModel
+    @question
+    @answer
+  end
+  
   # GET /evaluations
   # GET /evaluations.xml
   def index
@@ -30,13 +41,16 @@ class EvaluationsController < ApplicationController
     @reviewee_name = @review.TeamMember.name
     @reviewer_name = "Hardcoded Peer"
 
-    @teamMembers = TeamMember.all.map { |teamMember| [teamMember.name, teamMember.id] }
+    @response = ResponseViewModel.new
 
     @questions = Question.all
 
-    @evaluation = Evaluation.new
-    @evaluation.Review = @review
-
+    @response.questionAnswers = @questions.map { |q| 
+      @qa = QAViewModel.new
+      @qa.question = q.questionText
+      @qa.answer = nil
+    }
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @evaluation }

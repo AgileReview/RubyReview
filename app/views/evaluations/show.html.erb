@@ -1,15 +1,33 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Review:</b>
-  <%= @evaluation.Review %>
+  <b>Review of:</b>
+  <%= @evaluation.Review.TeamMember.name %>
 </p>
 
 <p>
-  <b>Teammember:</b>
-  <%= @evaluation.TeamMember %>
+  <b>By Team Member:</b>
+  <%= @evaluation.TeamMember.name %>
 </p>
 
+<p>
+  <b>Review Due:</b>
+  <%= @evaluation.Review.dueDate %>
+</p>
+
+<p>
+  <b>Responses:</b>
+</p>
+<% @responses.each do |r| %>
+    <p>
+      <b>Question:</b>
+      <%=r.Question.questionText %>
+      <b>Answer:</b>
+      <%=r.Answer.answerValue%>
+      <b>Date:</b>
+      <%=r.responseDate%>
+    </p>
+<% end %>
 
 <%= link_to 'Edit', edit_evaluation_path(@evaluation) %> |
 <%= link_to 'Back', evaluations_path %>

@@ -1,15 +1,4 @@
 class EvaluationsController < ApplicationController
-  
-  class ResponseViewModel
-    @questionAnswers
-    @errors
-  end
-  
-  class QAViewModel
-    @question
-    @answer
-  end
-  
   # GET /evaluations
   # GET /evaluations.xml
   def index
@@ -25,6 +14,7 @@ class EvaluationsController < ApplicationController
   # GET /evaluations/1.xml
   def show
     @evaluation = Evaluation.find(params[:id])
+    @responses = Response.find_all_by_Evaluation_id params[:id]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -41,15 +31,21 @@ class EvaluationsController < ApplicationController
     @reviewee_name = @review.TeamMember.name
     @reviewer_name = "Hardcoded Peer"
 
-    @response = ResponseViewModel.new
+    @evaluation = Evaluation.new
+    @evaluation.Review = @review
+    @evaluation.TeamMember = @review.TeamMember
 
     @questions = Question.all
+    @answers = @questions.compact.map { |q|
+      @r = Response.new
+      @r.Evaluation = @evaluation
+      @r.Question = q
+      @r.Answer = Answer.new
 
-    @response.questionAnswers = @questions.map { |q| 
-      @qa = QAViewModel.new
-      @qa.question = q.questionText
-      @qa.answer = nil
+      @r
     }
+
+    @evaluation.answer_set = @answers
     
     respond_to do |format|
       format.html # new.html.erb
@@ -66,9 +62,10 @@ class EvaluationsController < ApplicationController
   # POST /evaluations.xml
   def create
     @evaluation = Evaluation.new(params[:evaluation])
+    @answers = @evaluation.responses
 
     respond_to do |format|
-      if @evaluation.save
+      if @evaluation.save && @answers.each{|a| a.save }.all?
         format.html { redirect_to(@evaluation, :notice => 'Evaluation was successfully created.') }
         format.xml  { render :xml => @evaluation, :status => :created, :location => @evaluation }
       else

@@ -1,4 +1,6 @@
 RubyReview::Application.routes.draw do
+  resources :evaluations
+
   resources :roles
 
   resources :roles
@@ -9,8 +11,6 @@ RubyReview::Application.routes.draw do
   resources :Questions
   resources :reviews
   resources :Reviews
-  
-  get "home/index"
   
   root :to => "home#index"
 

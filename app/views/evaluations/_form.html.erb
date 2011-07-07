@@ -1,0 +1,53 @@
+
+<div class="field">
+Reviewee:<br />
+<%= @reviewee_name %>
+</div>
+<div class="field">
+Reviewer<br />
+<%= @reviewer_name %>
+</div>
+
+<%= form_for(@evaluation) do |f| %>
+  <% if @evaluation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@evaluation.errors.count, "error") %> prohibited this evaluation from being saved:</h2>
+
+      <ul>
+      <% @evaluation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :Review_id %>
+  <%= f.hidden_field :TeamMember_id %>
+  <% @evaluation.answer_set.each do |a| %>
+  <% f.fields_for :answer_set, a do |qf| %>
+      <div class="field">
+        <table>
+          <tr>
+            <td>&nbsp;</td>
+            <td><%= qf.label "1" %></td>
+            <td><%= qf.label "2" %></td>
+            <td><%= qf.label "3" %></td>
+            <td><%= qf.label "4" %></td>
+            <td><%= qf.label "5" %></td>
+          </tr>
+          <tr>
+            <td><%= qf.label a.Question.questionText %></td>
+            <td><%= qf.radio_button :answer_text, "1" %></td>
+            <td><%= qf.radio_button :answer_text, "2" %></td>
+            <td><%= qf.radio_button :answer_text, "3" %></td>
+            <td><%= qf.radio_button :answer_text, "4" %></td>
+            <td><%= qf.radio_button :answer_text, "5" %></td>
+          </tr>
+        </table>
+        <%= qf.hidden_field :question_id %>
+      </div>
+  <% end %>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  <% end %>

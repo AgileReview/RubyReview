@@ -2,19 +2,19 @@
 
 <table>
   <tr>
-    <th>Review</th>
-    <th>Teammember</th>
-    <th></th>
+    <th>Of</th>
+    <th>By</th>
+    <th>Due</th>
     <th></th>
     <th></th>
   </tr>
 
 <% @evaluations.each do |evaluation| %>
   <tr>
-    <td><%= evaluation.Review %></td>
-    <td><%= evaluation.TeamMember %></td>
+    <td><%= evaluation.TeamMember.name %></td>
+    <td><%= evaluation.Review.TeamMember.name %></td>
+    <td><%= evaluation.Review.dueDate %></td>
     <td><%= link_to 'Show', evaluation %></td>
-    <td><%= link_to 'Edit', edit_evaluation_path(evaluation) %></td>
     <td><%= link_to 'Destroy', evaluation, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

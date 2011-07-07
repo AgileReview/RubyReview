@@ -27,13 +27,15 @@ class EvaluationsController < ApplicationController
   def new
     @reviewId = params[:review_id]
     @review = Review.find(@reviewId)
+    
+    @reviewer = TeamMember.find_by_name('Eric Peterson')
 
     @reviewee_name = @review.TeamMember.name
-    @reviewer_name = "Hardcoded Peer"
+    @reviewer_name = @reviewer.name
 
     @evaluation = Evaluation.new
     @evaluation.Review = @review
-    @evaluation.TeamMember = @review.TeamMember
+    @evaluation.TeamMember = @reviewer
 
     @questions = Question.all
     @answers = @questions.compact.map { |q|
@@ -53,11 +55,6 @@ class EvaluationsController < ApplicationController
     end
   end
 
-  # GET /evaluations/1/edit
-  def edit
-    @evaluation = Evaluation.find(params[:id])
-  end
-
   # POST /evaluations
   # POST /evaluations.xml
   def create
@@ -70,22 +67,6 @@ class EvaluationsController < ApplicationController
         format.xml  { render :xml => @evaluation, :status => :created, :location => @evaluation }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @evaluation.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /evaluations/1
-  # PUT /evaluations/1.xml
-  def update
-    @evaluation = Evaluation.find(params[:id])
-
-    respond_to do |format|
-      if @evaluation.update_attributes(params[:evaluation])
-        format.html { redirect_to(@evaluation, :notice => 'Evaluation was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @evaluation.errors, :status => :unprocessable_entity }
       end
     end

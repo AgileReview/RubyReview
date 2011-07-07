@@ -25,7 +25,25 @@ Reviewer<br />
   <% @evaluation.answer_set.each do |a| %>
   <% f.fields_for :answer_set, a do |qf| %>
       <div class="field">
-        <%= qf.label a.Question.questionText %>&nbsp;<%= qf.text_field :answer_text %><%= qf.hidden_field :question_id %>
+        <table>
+          <tr>
+            <td>&nbsp;</td>
+            <td><%= qf.label "1" %></td>
+            <td><%= qf.label "2" %></td>
+            <td><%= qf.label "3" %></td>
+            <td><%= qf.label "4" %></td>
+            <td><%= qf.label "5" %></td>
+          </tr>
+          <tr>
+            <td><%= qf.label a.Question.questionText %></td>
+            <td><%= qf.radio_button :answer_text, "1" %></td>
+            <td><%= qf.radio_button :answer_text, "2" %></td>
+            <td><%= qf.radio_button :answer_text, "3" %></td>
+            <td><%= qf.radio_button :answer_text, "4" %></td>
+            <td><%= qf.radio_button :answer_text, "5" %></td>
+          </tr>
+        </table>
+        <%= qf.hidden_field :question_id %>
       </div>
   <% end %>
   <% end %>
